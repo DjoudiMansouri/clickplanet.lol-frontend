@@ -34,7 +34,7 @@ export default function About() {
                                     <img alt="picture of Raphaël Oester"
                                          src="/static/raphael.png"
                                          className="about-modal-pfp"/>
-                                    <p>I'm a freelance Go backend dev,<br/>and btw I'm looking for new mission :)</p>
+                                    <p>I'm a freelance Go backend dev,<br/>and btw I'm looking for a new mission :)</p>
                                 </div>
                             </div>
                             <p>
@@ -45,7 +45,12 @@ export default function About() {
                                 </li>
                                 <li><a target="_blank" href="https://x.com/raphael_oester">X</a></li>
                                 <li><a target="_blank" href="https://github.com/raphoester">GitHub</a></li>
+
+                                <p >"On peux avoir du café aussi ou c'est juste pour les CDI ?"</p>
+                                <a target="_blank" href="">Buy me a coffee ☕</a>
+
                             </ul>
+
                         </div>
 
                     </div>

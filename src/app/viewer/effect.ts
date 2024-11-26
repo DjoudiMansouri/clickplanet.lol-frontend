@@ -49,8 +49,19 @@ export function effect(
 
     eventTarget.addEventListener('mousemove', (event: MouseEvent) => {
         actOnPick_(event,
-            id => updateHoverEffect(displayPoints.geometry, id),
-            () => updateHoverEffect(displayPoints.geometry)
+            id => {
+                updateHoverEffect(displayPoints.geometry, id)
+                if (renderer) {
+                    renderer.domElement.style.cursor = 'pointer';
+                }
+            },
+            () => {
+                updateHoverEffect(displayPoints.geometry)
+                if (renderer) {
+            
+                    renderer.domElement.style.cursor = 'grab';
+                }
+            }
         )
     });
 
@@ -61,7 +72,6 @@ export function effect(
             const region = regions.get(country.code)
             if (!region) throw new Error(`Region not found for country ${country.code}`)
 
-            console.log("clicked on", id)
             tileClicker.clickTile(id, country.code).catch(console.error)
 
             const arrayIdIndexedOnZero = id - 1
@@ -73,6 +83,15 @@ export function effect(
 
             displayPoints.geometry.getAttribute('regionVector').needsUpdate = true
             // don't register click here or duplicate will be counted from the webhook updates
+
+                                
+            eventTarget.addEventListener('mousedown', () => {
+                renderer.domElement.style.cursor = 'grabbing';
+            })
+
+            eventTarget.addEventListener('mouseup', () => {
+                renderer.domElement.style.cursor = 'grab';
+            })
         });
     });
 
@@ -126,7 +145,6 @@ export function effect(
             if (!oldCountry) throw new Error(`Country not found for code ${previousCountry}`)
         }
 
-        console.log(newCountry, "received update", tile, country)
         leaderboard.registerClick(oldCountry, country)
         updateTilesAccordingToNewBindings(new Map([[tile, newCountry]]))
     })
@@ -201,3 +219,5 @@ export function updateHoverEffect(geometry: THREE.BufferGeometry, hoveredId?: nu
     geometry.setAttribute('hover', new THREE.BufferAttribute(newHovered, 1));
     geometry.attributes.hover.needsUpdate = true;
 }
+
+

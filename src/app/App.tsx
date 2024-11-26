@@ -1,25 +1,22 @@
 import Viewer, {ViewerProps} from "./viewer/Viewer.tsx";
 
-// import "./App.css"
-import MobileDeviceBlocker from "./MobileDeviceBlocker.tsx";
 import Warning from "./Warning.tsx";
 
 export type AppProps = ViewerProps
 
 export default function App(props: AppProps) {
-    if (detectMobile()) {
-        return <MobileDeviceBlocker/>
-    }
 
     return <>
-        <Warning
-            title={"HIGH LOAD NOTICE"}
+        {detectMobile() && <Warning
+            title={"IPHONES NOT SUPPORTED"}
             messages={[
-                `The site currently holds a lot of data.`,
-                `When the page loads, NO countries are displayed on the map.`,
-                `They appear after around a minute, depending on your connection.`,
-                `I'm working on the issue, thanks for your patience.`]}
-        />
+                `This site is very malfunctioning on mobile devices.`,
+                `IPhones in particular have very strict limitations on memory usage.`,
+                `It kinda works on Android but not everytime.`,
+                `To get the best experience, use a laptop or a desktop computer.`
+            ]}
+        />}
+
         <Viewer
             tileClicker={props.tileClicker}
             ownershipsGetter={props.ownershipsGetter}
@@ -39,7 +36,6 @@ function detectMobile() {
         /iPhone/i,
         /iPad/i,
         /iPod/i,
-        /BlackBerry/i,
         /Windows Phone/i
     ];
 
